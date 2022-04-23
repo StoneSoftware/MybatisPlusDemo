@@ -1,6 +1,7 @@
 package com.yibao.mpdemo.app.rest;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +17,13 @@ public class UserRest {
 
 	@Autowired
 	private UserDao userDao;
+
+	@GetMapping("selectMapsTest")
+	public List<Map<String, Object>> selectMapsTest() {
+		List<Map<String, Object>> resList = userDao.selectMapsTest();
+		return resList;
+
+	}
 
 	@GetMapping("getAll")
 	public List<UserPO> getAll() {
