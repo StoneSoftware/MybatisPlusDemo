@@ -18,9 +18,23 @@ public class UserRest {
 	@Autowired
 	private UserDao userDao;
 
+	@GetMapping("selectByIdTest")
+	public List<Map<String, Object>> selectByIdTest() {
+		List<Map<String, Object>> resList = userDao.selectByIdTest();
+		return resList;
+
+	}
+	
 	@GetMapping("selectMapsTest")
 	public List<Map<String, Object>> selectMapsTest() {
 		List<Map<String, Object>> resList = userDao.selectMapsTest();
+		return resList;
+
+	}
+
+	@GetMapping("selectObjsTest")
+	public List<Object> selectObjsTest() {
+		List<Object> resList = userDao.selectObjsTest();
 		return resList;
 
 	}

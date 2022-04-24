@@ -1,17 +1,51 @@
 package com.yibao.mpdemo.app.dao;
 
+import java.io.Serializable;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.yibao.mpdemo.app.vo.UserPO;
 
 public interface UserDao extends IService<UserPO> {
+	/*********************************************************/
+	/*************************BaseMapper常用查询方法***************/
+	/*********************************************************/
+	List<UserPO> getAll();
 
-	public List<Map<String, Object>> selectMapsTest();
+	UserPO selectByIdTest(Serializable id);
 
-	public List<UserPO> getAll();
+	List<UserPO> selectByIdTest(Collection<String> idList);
 
-	public List<UserPO> getById(Integer id);
+	List<UserPO> selectByMapTest(Map<String, Object> columnMap);
+
+	UserPO selectOneTest();
+
+	List<UserPO> selectListTest();
+
+	List<Map<String, Object>> selectMapsTest();
+
+	IPage<Map<String, Object>> selectMapsPageTest();
+
+	List<Object> selectObjsTest();
+
+	IPage<UserPO> getByPageTest();
+
+	long selectCountTest();
+	
+	/*********************************************************/
+	/*************************BaseMapper insert方法***************/
+	/*********************************************************/
+	
+	void insertTest(UserPO user);
+	 
+	/*********************************************************/
+	/*************************BaseMapper update方法***************/
+	/*********************************************************/
+	void updateByIdTest(UserPO user);
+	
+	void updateTest1();
 
 }

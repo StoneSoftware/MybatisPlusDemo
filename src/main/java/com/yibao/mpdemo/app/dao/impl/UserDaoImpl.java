@@ -1,12 +1,19 @@
 package com.yibao.mpdemo.app.dao.impl;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.yibao.mpdemo.app.dao.UserDao;
 import com.yibao.mpdemo.app.mapper.UserMapper;
@@ -17,13 +24,10 @@ public class UserDaoImpl extends ServiceImpl<UserMapper, UserPO> implements
 		UserDao {
 	@Autowired
 	private UserMapper userMapper;
-
-	@Override
-	public List<Map<String, Object>> selectMapsTest() {
-		QueryWrapper<UserPO> wrapper = new QueryWrapper<>();
-		wrapper.select(new String[] { "id", "name" }).eq("id", "1");
-		return this.getBaseMapper().selectMaps(wrapper);
-	}
+	
+	/*********************************************************/
+	/*************************BaseMapper 查询方法***************/
+	/*********************************************************/
 
 	@Override
 	public List<UserPO> getAll() {
@@ -31,10 +35,109 @@ public class UserDaoImpl extends ServiceImpl<UserMapper, UserPO> implements
 	}
 
 	@Override
-	public List<UserPO> getById(Integer id) {
+	public UserPO selectByIdTest(Serializable id) {
+		return this.getBaseMapper().selectById(id);
+	}
+
+	@Override
+	public List<UserPO> selectByIdTest(Collection<String> idList) {
+		return this.getBaseMapper().selectBatchIds(idList);
+	}
+
+	@Override
+	public List<UserPO> selectByMapTest(Map<String, Object> columnMap) {
+		// columnMap.put("name", "zhangsan");
+		// columnMap.put("列名", "列值");
+		return this.getBaseMapper().selectByMap(columnMap);
+	}
+
+	@Override
+	public UserPO selectOneTest() {
+		QueryWrapper<UserPO> wrapper = new QueryWrapper<>();
+		List<String> nameList = new ArrayList<>();
+		nameList.add("zhangsan");
+		nameList.add("lisi");
+		nameList.add("wangwu");
+		wrapper.in("name", nameList).like("email", "@").eq("id", "2");
+		return this.getBaseMapper().selectOne(wrapper);
+	}
+
+	@Override
+	public List<UserPO> selectListTest() {
+		QueryWrapper<UserPO> wrapper = new QueryWrapper<>();
+		List<String> nameList = new ArrayList<>();
+		nameList.add("zhangsan");
+		nameList.add("lisi");
+		nameList.add("wangwu");
+		wrapper.in("name", nameList).like("email", "@").eq("id", "2");
+		return this.getBaseMapper().selectList(wrapper);
+	}
+
+	@Override
+	public List<Map<String, Object>> selectMapsTest() {
+		QueryWrapper<UserPO> wrapper = new QueryWrapper<>();
+		wrapper.select("id", "name").eq("id", "1");
+		return this.getBaseMapper().selectMaps(wrapper);
+	}
+
+	@Override
+	public IPage<Map<String, Object>> selectMapsPageTest() {
+		Page<Map<String, Object>> page = new Page<>(1, 20);
+		QueryWrapper<UserPO> wrapper = new QueryWrapper<>();
+		wrapper.select("id", "name").eq("id", "1");
+		return this.getBaseMapper().selectMapsPage(page, wrapper);
+	}
+
+	@Override
+	public List<Object> selectObjsTest() {
+		QueryWrapper<UserPO> wrapper = new QueryWrapper<>();
+		wrapper.like("email", "@");
+		return this.getBaseMapper().selectObjs(wrapper);
+	}
+
+	@Override
+	public IPage<UserPO> getByPageTest() {
 		QueryWrapper<UserPO> queryWrapper = new QueryWrapper<>();
-		queryWrapper.eq("id", id);
-		return userMapper.selectList(queryWrapper);
+		queryWrapper.like("email", "@");
+		IPage<UserPO> page = new Page<>(1, 50);
+		return this.getBaseMapper().selectPage(page, queryWrapper);
+	}
+
+	@Override
+	public long selectCountTest() {
+		QueryWrapper<UserPO> queryWrapper = new QueryWrapper<>();
+		queryWrapper.like("email", "@");
+		return this.getBaseMapper().selectCount(queryWrapper);
+	}
+
+
+	
+	
+	/*********************************************************/
+	/*************************BaseMapper insert方法***************/
+	/*********************************************************/
+	@Override
+	public void insertTest(UserPO user) {
+		this.getBaseMapper().insert(user);
+	}
+	
+	
+	/*********************************************************/
+	/*************************BaseMapper update方法***************/
+	/*********************************************************/
+	@Override
+	public void updateByIdTest(UserPO user) {
+		this.getBaseMapper().updateById(user);
+	}
+	
+	@Override
+	public void updateTest1() {
+		UpdateWrapper<UserPO> wrapper=new UpdateWrapper<>();
+		wrapper.eq("id", "3");
+		UserPO user = new UserPO();
+		user.setName("zs");
+		user.setAge("23");
+		this.getBaseMapper().update(user, wrapper);
 	}
 
 }
