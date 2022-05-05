@@ -19,12 +19,12 @@ public class UserRest {
 	private UserDao userDao;
 
 	@GetMapping("selectByIdTest")
-	public List<Map<String, Object>> selectByIdTest() {
-		List<Map<String, Object>> resList = userDao.selectByIdTest();
-		return resList;
+	public UserPO selectByIdTest(String id) {
+		UserPO user = userDao.selectByIdTest(id);
+		return user;
 
 	}
-	
+
 	@GetMapping("selectMapsTest")
 	public List<Map<String, Object>> selectMapsTest() {
 		List<Map<String, Object>> resList = userDao.selectMapsTest();
@@ -47,9 +47,9 @@ public class UserRest {
 	}
 
 	@GetMapping("getById")
-	public List<UserPO> getById(Integer id) {
-		List<UserPO> resList = userDao.getById(id);
-		return resList;
+	public UserPO getById(Integer id) {
+		UserPO userPO = userDao.getById(id);
+		return userPO;
 
 	}
 }
